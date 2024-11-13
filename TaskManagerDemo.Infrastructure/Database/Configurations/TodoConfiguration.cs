@@ -27,6 +27,24 @@ public class TodoConfiguration : IEntityTypeConfiguration<Todo>
 
         builder.HasOne<User>()
             .WithMany()
-            .HasForeignKey(x => x.OwnerId);
+            .HasForeignKey(x => x.OwnerId)
+            .IsRequired();
+
+        builder.Property(x => x.Status)
+            .HasConversion<int>()
+            .IsRequired();
+
+        builder.Property(x => x.CreationDateTime)
+            .HasConversion<DateTime>()
+            .IsRequired();
+        
+        builder.Property(x => x.StartProgressDateTime)
+            .HasConversion<DateTime>();
+
+        builder.Property(x => x.FinishedDateTime)
+            .HasConversion<DateTime>();
+        
+        builder.Property(x => x.DueDate)
+            .HasConversion<DateOnly>();
     }
 }

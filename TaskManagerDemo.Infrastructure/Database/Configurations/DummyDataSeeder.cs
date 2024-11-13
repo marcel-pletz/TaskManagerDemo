@@ -34,12 +34,14 @@ public static class DummyDataSeeder
         var todo1 = Todo.Create(
             new Title("Todo 1"),
             new Description("long description for user 1"), 
-            user1.Id);
+            user1.Id,
+            DateTime.Now);
         
         var todo2 = Todo.Create(
             new Title("Todo 2"),
             new Description("long description user 2"), 
-            user1.Id);
+            user1.Id,
+            DateTime.Now);
         
         context.Todos.AddRange(todo1, todo2);
         
