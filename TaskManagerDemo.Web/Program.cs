@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using TaskManagerDemo.Domain;
+using TaskManagerDemo.Domain.Users.Repositories;
 using TaskManagerDemo.Infrastructure.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,7 @@ builder.Services.AddDbContext<TaskManagerDbContext>(options =>
     options.UseSqlite($"Data Source=TaskManagerDemo.db");
 });
     
+ConfigureDependencies(builder.Services);
 
 var app = builder.Build();
 
@@ -35,10 +38,17 @@ app.MapControllerRoute(
 
 app.MapFallbackToFile("index.html");
 
+
 MigrateDatabase();
 
 app.Run();
 return;
+
+void ConfigureDependencies(IServiceCollection services)
+{
+    services.AddScoped<IUnitOfWork, UnitOfWork>();
+    services.AddScoped<IUserRepository, UserRepository>();
+}
 
 void MigrateDatabase()
 {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Users.Aggregates;
 using TaskManagerDemo.Domain.Users.ValueObjects;
 using TaskManagerDemo.Infrastructure.Database;
@@ -9,12 +10,12 @@ using TaskManagerDemo.Infrastructure.Database;
 namespace TaskManagerDemo.Web.Controllers;
 
 [Route("api/users")]
-public sealed class UserController(TaskManagerDbContext context) : Controller
+public sealed class UserController(IUnitOfWork unitOfWork) : Controller
 {
     [HttpGet]
     public async Task<ActionResult<UserDto[]>> GetAllUsers(CancellationToken cancellationToken)
     {
-        var users = await context.Users.ToArrayAsync(cancellationToken);
+        var users = await unitOfWork.UserRepository.Query().ToListAsync(cancellationToken);
         var userDtos = users.Select(UserDto.From);
         return Ok(userDtos);
     }

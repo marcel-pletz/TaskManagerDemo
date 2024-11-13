@@ -1,6 +1,10 @@
-﻿namespace TaskManagerDemo.Domain;
+﻿using TaskManagerDemo.Domain.Users.Repositories;
+
+namespace TaskManagerDemo.Domain;
 
 public interface IUnitOfWork
 {
-    Task SaveChanges();
+    public IUserRepository UserRepository { get; }
+    
+    Task SaveChanges(CancellationToken cancellationToken);
 }
