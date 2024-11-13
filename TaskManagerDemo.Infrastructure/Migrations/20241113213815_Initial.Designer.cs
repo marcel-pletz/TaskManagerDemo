@@ -11,14 +11,37 @@ using TaskManagerDemo.Infrastructure.Database;
 namespace TaskManagerDemo.Infrastructure.Migrations
 {
     [DbContext(typeof(TaskManagerDbContext))]
-    [Migration("20241113200008_AddUserContext")]
-    partial class AddUserContext
+    [Migration("20241113213815_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
+
+            modelBuilder.Entity("TaskManagerDemo.Domain.Todos.Aggregates.Todo", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Todo", (string)null);
+                });
 
             modelBuilder.Entity("TaskManagerDemo.Domain.Users.Aggregates.User", b =>
                 {
@@ -39,29 +62,15 @@ namespace TaskManagerDemo.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e37604b5-2b8e-4db9-a00f-afce5ce31ffa"),
-                            Email = "user1@example.com",
-                            Role = 0,
-                            Username = "user1"
-                        },
-                        new
-                        {
-                            Id = new Guid("f0a15867-e199-4567-8595-7369cbb99baa"),
-                            Email = "user2@example.com",
-                            Role = 0,
-                            Username = "user2"
-                        },
-                        new
-                        {
-                            Id = new Guid("801059ca-2427-4710-b085-ce84cfe0b800"),
-                            Email = "admin@example.com",
-                            Role = 1,
-                            Username = "admin"
-                        });
+            modelBuilder.Entity("TaskManagerDemo.Domain.Todos.Aggregates.Todo", b =>
+                {
+                    b.HasOne("TaskManagerDemo.Domain.Users.Aggregates.User", null)
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
