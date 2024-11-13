@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+TaskManagerDemo.Web/TaskManagerDemo.db-wal
+TaskManagerDemo.Web/TaskManagerDemo.db-shm
+TaskManagerDemo.Web/TaskManagerDemo.db

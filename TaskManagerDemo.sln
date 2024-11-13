@@ -4,7 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Web", "Task
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Domain", "TaskManagerDemo.Domain\TaskManagerDemo.Domain.csproj", "{956E7694-03C3-49A5-9307-3FEBF636F82C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1DB8B59D-332A-4DE2-B7CB-8E4796E3CC98}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Domain.Tests", "Tests\TaskManagerDemo.Domain.Tests\TaskManagerDemo.Domain.Tests.csproj", "{DCB23264-616B-4C89-85FC-31BCF9184066}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Infrastructure", "TaskManagerDemo.Infrastructure\TaskManagerDemo.Infrastructure.csproj", "{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +28,12 @@ Global
 		{DCB23264-616B-4C89-85FC-31BCF9184066}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCB23264-616B-4C89-85FC-31BCF9184066}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCB23264-616B-4C89-85FC-31BCF9184066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DCB23264-616B-4C89-85FC-31BCF9184066} = {1DB8B59D-332A-4DE2-B7CB-8E4796E3CC98}
 	EndGlobalSection
 EndGlobal
