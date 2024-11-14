@@ -4,5 +4,5 @@ namespace TaskManagerDemo.Domain.Users.Repositories;
 
 public interface IUserRepository : IQueryableRepository<User>, IAddableRepository<User>
 {
-    Task<User> GetUserById(UserId userId, CancellationToken cancellationToken);
+    Task<User> GetById(UserId userId, CancellationToken cancellationToken);
 }

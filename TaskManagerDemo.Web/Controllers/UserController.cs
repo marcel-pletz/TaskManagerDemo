@@ -10,7 +10,7 @@ using TaskManagerDemo.Infrastructure.Database;
 namespace TaskManagerDemo.Web.Controllers;
 
 [Route("api/users")]
-public sealed class UserController(IUnitOfWork unitOfWork) : Controller
+public sealed class UserController(IUnitOfWork unitOfWork) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<UserDto[]>> GetAllUsers(CancellationToken cancellationToken)

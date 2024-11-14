@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Domain.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Infrastructure", "TaskManagerDemo.Infrastructure\TaskManagerDemo.Infrastructure.csproj", "{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManagerDemo.Application", "TaskManagerDemo.Application\TaskManagerDemo.Application.csproj", "{07D981FE-294F-44FB-BA11-AB23E2BB062A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57FD6AAE-B090-4B57-8C20-09E699F0A4F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07D981FE-294F-44FB-BA11-AB23E2BB062A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07D981FE-294F-44FB-BA11-AB23E2BB062A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07D981FE-294F-44FB-BA11-AB23E2BB062A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07D981FE-294F-44FB-BA11-AB23E2BB062A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DCB23264-616B-4C89-85FC-31BCF9184066} = {1DB8B59D-332A-4DE2-B7CB-8E4796E3CC98}

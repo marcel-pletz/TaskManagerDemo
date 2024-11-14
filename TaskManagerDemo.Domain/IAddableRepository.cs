@@ -2,5 +2,5 @@
 
 public interface IAddableRepository<in TAggregate> where TAggregate : IAggregateRoot
 {
-    Task Add(TAggregate aggregate, CancellationToken cancellationToken);
+    void Add(TAggregate aggregate);
 }

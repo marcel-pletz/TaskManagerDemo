@@ -11,12 +11,12 @@ public sealed class UserRepository(TaskManagerDbContext context) : IUserReposito
         return context.Users;
     }
 
-    public async Task Add(User user, CancellationToken cancellationToken)
+    public void Add(User user)
     {
-        await context.Users.AddAsync(user, cancellationToken);
+        context.Users.Add(user);
     }
 
-    public Task<User> GetUserById(UserId userId, CancellationToken cancellationToken)
+    public Task<User> GetById(UserId userId, CancellationToken cancellationToken)
     {
         return context.Users.Where(x => x.Id == userId).SingleAsync(cancellationToken);
     }

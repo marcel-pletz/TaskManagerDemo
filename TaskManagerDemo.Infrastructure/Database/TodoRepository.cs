@@ -8,11 +8,16 @@ namespace TaskManagerDemo.Infrastructure.Database;
 
 public class TodoRepository(TaskManagerDbContext context) : ITodoRepository
 {
-    public async Task Add(Todo todo, CancellationToken cancellationToken)
+    public void Add(Todo todo)
     {
-        await context.Todos.AddAsync(todo, cancellationToken);
+        context.Todos.Add(todo);
     }
 
+    public void Remove(Todo todo)
+    {
+        context.Todos.Remove(todo);
+    }
+    
     public Task<Todo> GetById(TodoId id, CancellationToken cancellationToken)
     {
         return context.Todos
@@ -25,5 +30,10 @@ public class TodoRepository(TaskManagerDbContext context) : ITodoRepository
         return context.Todos
             .Where(x => x.OwnerId == ownerId)
             .ToArrayAsync(cancellationToken);
+    }
+
+    public IQueryable<Todo> Query()
+    {
+        return context.Todos;
     }
 }
