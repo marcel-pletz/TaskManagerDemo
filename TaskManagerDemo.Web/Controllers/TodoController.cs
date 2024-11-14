@@ -1,20 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerDemo.Application.Commands;
 using TaskManagerDemo.Application.Queries;
 
 namespace TaskManagerDemo.Web.Controllers;
 
+[Authorize]
 [Route("api/todos")]
 public sealed class TodoController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<ListAllTodosOfUser.TodoListDto>> ListAllTodosOfUser(
-        [FromQuery] string currentUserId,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<ListAllTodosOfUser.TodoListDto>> ListAllTodosOfUser(CancellationToken cancellationToken)
     {
-        var listQuery = new ListAllTodosOfUser(currentUserId);
+        var listQuery = new ListAllTodosOfUser();
         
         var list = await mediator.Send(listQuery, cancellationToken);
 
@@ -22,9 +22,9 @@ public sealed class TodoController(IMediator mediator) : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<GetTodo.TodoDto>> GetTodo(string id, [FromQuery] string currentUserId, CancellationToken cancellationToken)
+    public async Task<ActionResult<GetTodo.TodoDto>> GetTodo(string id, CancellationToken cancellationToken)
     {
-        var todoQuery = new GetTodo(id, currentUserId);
+        var todoQuery = new GetTodo(id);
 
         var todo = await mediator.Send(todoQuery, cancellationToken);
 
@@ -32,11 +32,11 @@ public sealed class TodoController(IMediator mediator) : ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult> CreateTodo([FromQuery]string currentUserId, [FromBody] TodoCommandDto newTodo, CancellationToken cancellationToken)
+    public async Task<ActionResult> CreateTodo([FromBody] TodoCommandDto newTodo, CancellationToken cancellationToken)
     {
-        var createRequest = new CreateTodo(newTodo.Title, newTodo.Description, currentUserId)
+        var createRequest = new CreateTodo(newTodo.Title, newTodo.Description)
         {
-            CurrentUserId = currentUserId
+            DueDate = newTodo.DueDate
         };
            
         await mediator.Send(createRequest, cancellationToken);
@@ -45,9 +45,10 @@ public sealed class TodoController(IMediator mediator) : ControllerBase
     }
     
     [HttpPut("{id}")] 
-    public async Task<ActionResult> UpdateTodo(string id, [FromQuery]string currentUserId, [FromBody] TodoCommandDto updatedTodo, CancellationToken cancellationToken)
+    public async Task<ActionResult> UpdateTodo(string id, [FromBody] TodoCommandDto updatedTodo, CancellationToken cancellationToken)
     {
-        var updateRequest = new UpdateTodo(id, updatedTodo.Title, updatedTodo.Description, currentUserId)
+        
+        var updateRequest = new UpdateTodo(id, updatedTodo.Title, updatedTodo.Description)
         {
             DueDate = updatedTodo.DueDate,
         };
@@ -58,9 +59,9 @@ public sealed class TodoController(IMediator mediator) : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(string id, [FromQuery]string currentUserId, CancellationToken cancellationToken)
+    public async Task<ActionResult> Delete(string id, CancellationToken cancellationToken)
     {
-        var deleteRequest = new DeleteTodo(id, currentUserId);
+        var deleteRequest = new DeleteTodo(id);
 
         await mediator.Send(deleteRequest, cancellationToken);
 

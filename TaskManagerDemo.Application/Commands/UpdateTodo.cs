@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TaskManagerDemo.Application.Extensions;
+using TaskManagerDemo.Application.Providers;
 using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Aggregates;
 using TaskManagerDemo.Domain.Todos.Services;
@@ -7,17 +8,21 @@ using TaskManagerDemo.Domain.Todos.ValueObjects;
 
 namespace TaskManagerDemo.Application.Commands;
 
-public sealed record UpdateTodo(string Id, string Title, string Description, string CurrentUserId) : IRequest
+public sealed record UpdateTodo(string Id, string Title, string Description) : IRequest
 {
     public DateOnly? DueDate { get; init; }
     
-    public sealed class Handler(IUnitOfWork unitOfWork, TodoPermissionGuard guard, TimeProvider timeProvider) 
+    public sealed class Handler(IUnitOfWork unitOfWork, 
+        IUserProvider userProvider, 
+        TodoPermissionGuard guard, 
+        TimeProvider timeProvider) 
         : IRequestHandler<UpdateTodo>
     {
         public async Task Handle(UpdateTodo request, CancellationToken cancellationToken)
         {
+            var currentUser = await userProvider.ProvideCurrentUser(cancellationToken);
             var todo = await unitOfWork.TodoRepository.GetById(request.Id, cancellationToken);
-            var currentUser = await unitOfWork.UserRepository.GetById(request.CurrentUserId, cancellationToken);
+            
             guard.GuardAccessToTodo(currentUser, todo);
 
             Update(todo, request);

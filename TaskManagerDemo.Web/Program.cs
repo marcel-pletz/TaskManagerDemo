@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerDemo.Application.Commands;
+using TaskManagerDemo.Application.Providers;
 using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Repositories;
 using TaskManagerDemo.Domain.Todos.Services;
@@ -70,6 +71,8 @@ void ConfigureDependencies(IServiceCollection services)
     services.AddScoped<ITodoRepository, TodoRepository>();
 
     services.AddTransient<TodoPermissionGuard>();
+
+    services.AddScoped<IUserProvider, HttpContextUserProvider>();
     
     services.AddSingleton(TimeProvider.System);
 }

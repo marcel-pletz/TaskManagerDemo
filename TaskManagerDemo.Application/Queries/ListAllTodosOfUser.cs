@@ -1,20 +1,24 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TaskManagerDemo.Application.Extensions;
+using TaskManagerDemo.Application.Providers;
+using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Repositories;
 using TaskManagerDemo.Domain.Todos.ValueObjects;
 using TaskManagerDemo.Domain.Users.Aggregates;
 
 namespace TaskManagerDemo.Application.Queries;
 
-public sealed record ListAllTodosOfUser(string CurrentUserId) : IRequest<ListAllTodosOfUser.TodoListDto>
+public sealed record ListAllTodosOfUser() : IRequest<ListAllTodosOfUser.TodoListDto>
 {
-    public sealed class Handler(ITodoRepository repository) : IRequestHandler<ListAllTodosOfUser, TodoListDto>
+    public sealed class Handler(ITodoRepository todoRepository, IUserProvider userProvider) : IRequestHandler<ListAllTodosOfUser, TodoListDto>
     {
         public async Task<TodoListDto> Handle(ListAllTodosOfUser request, CancellationToken cancellationToken)
         {
-            var currentUserId = UserId.From(request.CurrentUserId);
-            var entries = await repository.Query()
-                .Where(x => x.OwnerId == currentUserId)
+            var user = await userProvider.ProvideCurrentUser(cancellationToken);
+            
+            var entries = await todoRepository.Query()
+                .Where(x => x.OwnerId == user.Id)
                 .Select(x => new TodoEntryDto
                 {
                     Id = x.Id.Value,
