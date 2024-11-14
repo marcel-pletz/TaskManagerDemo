@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using TaskManagerDemo.Application.Extensions;
 using TaskManagerDemo.Application.Providers;
 using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Aggregates;

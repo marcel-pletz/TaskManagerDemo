@@ -1,8 +1,6 @@
-﻿using System.Runtime.InteropServices;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerDemo.Domain.Users.Repositories;
 using TaskManagerDemo.Domain.Users.ValueObjects;

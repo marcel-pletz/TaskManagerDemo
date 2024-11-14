@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TaskManagerDemo.Domain.Users.Aggregates;
 using TaskManagerDemo.Domain.Users.ValueObjects;

@@ -1,11 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TaskManagerDemo.Application.Extensions;
 using TaskManagerDemo.Application.Providers;
-using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Repositories;
 using TaskManagerDemo.Domain.Todos.ValueObjects;
-using TaskManagerDemo.Domain.Users.Aggregates;
 
 namespace TaskManagerDemo.Application.Queries;
 

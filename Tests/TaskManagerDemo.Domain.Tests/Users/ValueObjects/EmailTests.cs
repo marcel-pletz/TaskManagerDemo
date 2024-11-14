@@ -1,6 +1,4 @@
-﻿using TaskManagerDemo.Domain.Users.Aggregates;
-
-namespace TaskManagerDemo.Domain.Users.ValueObjects;
+﻿namespace TaskManagerDemo.Domain.Users.ValueObjects;
 
 public class EmailTests
 {

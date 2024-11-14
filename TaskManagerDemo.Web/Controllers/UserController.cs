@@ -1,11 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Users.Aggregates;
 using TaskManagerDemo.Domain.Users.ValueObjects;
-using TaskManagerDemo.Infrastructure.Database;
 
 namespace TaskManagerDemo.Web.Controllers;
 

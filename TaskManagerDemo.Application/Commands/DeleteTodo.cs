@@ -1,6 +1,4 @@
-﻿using MediatR;
-using TaskManagerDemo.Application.Extensions;
-using TaskManagerDemo.Application.Providers;
+﻿using TaskManagerDemo.Application.Providers;
 using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Aggregates;
 using TaskManagerDemo.Domain.Todos.Services;
