@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerDemo.Domain.Todos.Repositories;
+using TaskManagerDemo.Domain.Todos.ValueObjects;
 using TaskManagerDemo.Domain.Users.Aggregates;
 
 namespace TaskManagerDemo.Application.Queries;
@@ -19,6 +20,7 @@ public sealed record ListAllTodosOfUser(string CurrentUserId) : IRequest<ListAll
                     Id = x.Id.Value,
                     Title = x.Title.Value,
                     DueDate = x.DueDate!.Value,
+                    Status = x.Status,
                 })
                 .ToArrayAsync(cancellationToken);
 
@@ -33,6 +35,8 @@ public sealed record ListAllTodosOfUser(string CurrentUserId) : IRequest<ListAll
         public required Guid Id { get; init; }
         
         public required string Title { get; init; }
+
+        public required Status Status { get; set; }
         
         public DateOnly? DueDate { get; init; }
     }

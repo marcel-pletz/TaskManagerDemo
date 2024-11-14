@@ -4,6 +4,7 @@ using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Aggregates;
 using TaskManagerDemo.Domain.Todos.Repositories;
 using TaskManagerDemo.Domain.Todos.Services;
+using TaskManagerDemo.Domain.Todos.ValueObjects;
 
 namespace TaskManagerDemo.Application.Queries;
 
@@ -28,6 +29,7 @@ public sealed record GetTodo(string Id, string CurrentUserId) : IRequest<GetTodo
                 Id = todo.Id.Value,
                 Title = todo.Title.Value,
                 Description = todo.Description.Value,
+                Status = todo.Status,
                 DueDate = todo.DueDate
             };
         }
@@ -40,6 +42,8 @@ public sealed record GetTodo(string Id, string CurrentUserId) : IRequest<GetTodo
         public required string Title { get; init; }
         
         public required string Description { get; init; }
+        
+        public required Status Status { get; set; }
         
         public DateOnly? DueDate { get; init; }
     }
