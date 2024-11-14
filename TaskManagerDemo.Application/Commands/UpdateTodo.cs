@@ -8,7 +8,7 @@ using TaskManagerDemo.Domain.Todos.ValueObjects;
 
 namespace TaskManagerDemo.Application.Commands;
 
-public sealed record UpdateTodo(string Id, string Title, string Description) : IRequest
+public sealed record UpdateTodo(string Id, string Title, string Description) : ModifyTodoRequest(Id)
 {
     public DateOnly? DueDate { get; init; }
     
@@ -16,18 +16,11 @@ public sealed record UpdateTodo(string Id, string Title, string Description) : I
         IUserProvider userProvider, 
         TodoPermissionGuard guard, 
         TimeProvider timeProvider) 
-        : IRequestHandler<UpdateTodo>
+        : HandlerTemplate<UpdateTodo>(unitOfWork, userProvider, guard)
     {
-        public async Task Handle(UpdateTodo request, CancellationToken cancellationToken)
+        protected override void DoModification(Todo todo, UpdateTodo request)
         {
-            var currentUser = await userProvider.ProvideCurrentUser(cancellationToken);
-            var todo = await unitOfWork.TodoRepository.GetById(request.Id, cancellationToken);
-            
-            guard.GuardAccessToTodo(currentUser, todo);
-
             Update(todo, request);
-            
-            await unitOfWork.SaveChanges(cancellationToken);
         }
 
         private void Update(Todo todo, UpdateTodo request)

@@ -2,24 +2,21 @@
 using TaskManagerDemo.Application.Extensions;
 using TaskManagerDemo.Application.Providers;
 using TaskManagerDemo.Domain;
+using TaskManagerDemo.Domain.Todos.Aggregates;
 using TaskManagerDemo.Domain.Todos.Services;
 
 namespace TaskManagerDemo.Application.Commands;
 
-public sealed record DeleteTodo(string Id) : IRequest
+public sealed record DeleteTodo(string Id) : ModifyTodoRequest(Id)
 {
-    public sealed class Handler(IUnitOfWork unitOfWork, IUserProvider userProvider, TodoPermissionGuard todoPermissionGuard) : IRequestHandler<DeleteTodo>
+    public sealed class Handler(IUnitOfWork unitOfWork, IUserProvider userProvider, TodoPermissionGuard guard) 
+        : HandlerTemplate<DeleteTodo>(unitOfWork, userProvider, guard)
     {
-        public async Task Handle(DeleteTodo request, CancellationToken cancellationToken)
-        {
-            var currentUser = await userProvider.ProvideCurrentUser(cancellationToken);
-            var todo = await unitOfWork.TodoRepository.GetById(request.Id, cancellationToken);
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-            todoPermissionGuard.GuardAccessToTodo(currentUser, todo);
-            
-            unitOfWork.TodoRepository.Remove(todo);
-            
-            await unitOfWork.SaveChanges(cancellationToken);
+        protected override void DoModification(Todo todo, DeleteTodo request)
+        {
+            _unitOfWork.TodoRepository.Remove(todo);
         }
     }
 }

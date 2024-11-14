@@ -16,9 +16,8 @@ public sealed record ListAllTodosOfUser() : IRequest<ListAllTodosOfUser.TodoList
         public async Task<TodoListDto> Handle(ListAllTodosOfUser request, CancellationToken cancellationToken)
         {
             var user = await userProvider.ProvideCurrentUser(cancellationToken);
-            
-            var entries = await todoRepository.Query()
-                .Where(x => x.OwnerId == user.Id)
+
+            var entries = await todoRepository.ListTodosOwnedByUser(user.Id)
                 .Select(x => new TodoEntryDto
                 {
                     Id = x.Id.Value,

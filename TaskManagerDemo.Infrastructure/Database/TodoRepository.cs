@@ -25,11 +25,10 @@ public class TodoRepository(TaskManagerDbContext context) : ITodoRepository
             .SingleAsync(cancellationToken);
     }
 
-    public Task<Todo[]> ListTodosOwnedByUser(UserId ownerId, CancellationToken cancellationToken)
+    public IQueryable<Todo> ListTodosOwnedByUser(UserId ownerId)
     {
         return context.Todos
-            .Where(x => x.OwnerId == ownerId)
-            .ToArrayAsync(cancellationToken);
+            .Where(x => x.OwnerId == ownerId);
     }
 
     public IQueryable<Todo> Query()

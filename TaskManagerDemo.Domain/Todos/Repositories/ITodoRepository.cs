@@ -8,5 +8,5 @@ public interface ITodoRepository : IAddableRepository<Todo>, IQueryableRepositor
 {
     public Task<Todo> GetById(TodoId id, CancellationToken cancellationToken);
     
-    public Task<Todo[]> ListTodosOwnedByUser(UserId ownerId, CancellationToken cancellationToken);
+    public IQueryable<Todo> ListTodosOwnedByUser(UserId ownerId);
 }

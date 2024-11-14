@@ -68,6 +68,26 @@ public sealed class TodoController(IMediator mediator) : ControllerBase
         return Ok();
     }
     
+    [HttpPost("{id}/start-progress")]
+    public async Task<ActionResult> StartProgress(string id, CancellationToken cancellationToken)
+    {
+        var createRequest = new StartTodoProgress(id);
+           
+        await mediator.Send(createRequest, cancellationToken);
+
+        return Ok();
+    }
+    
+    [HttpPost("{id}/finish")]
+    public async Task<ActionResult> Finish(string id, CancellationToken cancellationToken)
+    {
+        var createRequest = new FinishTodo(id);
+           
+        await mediator.Send(createRequest, cancellationToken);
+
+        return Ok();
+    }
+    
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public sealed class TodoCommandDto
     {
