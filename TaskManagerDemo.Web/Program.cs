@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerDemo.Application.Commands;
@@ -6,6 +7,7 @@ using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Repositories;
 using TaskManagerDemo.Domain.Todos.Services;
 using TaskManagerDemo.Domain.Users.Repositories;
+using TaskManagerDemo.Infrastructure;
 using TaskManagerDemo.Infrastructure.Database;
 using TaskManagerDemo.Infrastructure.Database.Configurations;
 
@@ -66,7 +68,16 @@ return;
 
 void ConfigureDependencies(IServiceCollection services)
 {
-    services.AddScoped<IUnitOfWork, UnitOfWork>();
+    services.AddScoped<UnitOfWork>();
+    services.AddScoped<IUnitOfWork, DomainEventUnitOfWorkDecorator>(provider =>
+    {
+        var unitOfWork = provider.GetRequiredService<UnitOfWork>();
+        var context = provider.GetRequiredService<TaskManagerDbContext>();
+        var mediator = provider.GetRequiredService<IMediator>();
+        
+        return new DomainEventUnitOfWorkDecorator(unitOfWork, context, mediator);
+    });
+    
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<ITodoRepository, TodoRepository>();
 

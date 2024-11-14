@@ -2,7 +2,7 @@
 
 namespace TaskManagerDemo.Domain.Users.Aggregates;
 
-public sealed class User : IAggregateRoot 
+public sealed class User : AggregateRoot 
 {
     public UserId Id { get; private init; }
     

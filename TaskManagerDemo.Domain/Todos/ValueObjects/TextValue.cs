@@ -25,5 +25,11 @@ public abstract record TextValue
             throw new ArgumentException("Title cannot be longer than 100 characters.", nameof(text));
         }
     }
-
+    
+    public override string ToString()
+    {
+        return Value;
+    }
+    
+    public static implicit operator string(TextValue id) => id.Value;
 }

@@ -11,6 +11,8 @@ public class TodoConfiguration : IEntityTypeConfiguration<Todo>
     public void Configure(EntityTypeBuilder<Todo> builder)
     {
         builder.ToTable(nameof(Todo));
+
+        builder.Ignore(x => x.DomainEvents);
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id)

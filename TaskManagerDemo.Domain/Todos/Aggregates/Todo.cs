@@ -1,9 +1,10 @@
-﻿using TaskManagerDemo.Domain.Todos.ValueObjects;
+﻿using TaskManagerDemo.Domain.Todos.Events;
+using TaskManagerDemo.Domain.Todos.ValueObjects;
 using TaskManagerDemo.Domain.Users.Aggregates;
 
 namespace TaskManagerDemo.Domain.Todos.Aggregates;
 
-public sealed class Todo : IAggregateRoot
+public sealed class Todo : AggregateRoot
 {
     public TodoId Id { get; init; }
     
@@ -38,6 +39,8 @@ public sealed class Todo : IAggregateRoot
         ValidateDueDate(dueDate, today);
         
         DueDate = dueDate;
+        
+        Raise(new TodoDueDateChanged(Id, DueDate.Value));
     }
 
     private void ValidateStatusAllowsDueDateChanges()
@@ -53,6 +56,8 @@ public sealed class Todo : IAggregateRoot
         ValidateStatusAllowsDueDateChanges();
         
         DueDate = null;
+        
+        Raise(new TodoDueDateRemoved(Id));
     }
     
     public void StartProgress(DateTime now)
@@ -64,6 +69,8 @@ public sealed class Todo : IAggregateRoot
 
         Status = Status.InProgress;
         StartProgressDateTime = now;
+        
+        Raise(new TodoProgressStarted(Id, StartProgressDateTime.Value));
     }
 
     public void Finish(DateTime now)
@@ -75,12 +82,16 @@ public sealed class Todo : IAggregateRoot
         
         Status = Status.Finished;
         FinishedDateTime = now;
+        
+        Raise(new TodoFinished(Id, FinishedDateTime.Value));
     }
 
     public void Update(Title title, Description description)
     {
         Title = title;
         Description = description;
+        
+        Raise(new TodoUpdated(Id));
     }
     
     public bool IsOwnedBy(User user)
@@ -102,6 +113,8 @@ public sealed class Todo : IAggregateRoot
             DueDate = dueDate
         };
 
+        todo.Raise(new TodoCreated(todo.Id));
+        
         return todo;
     }
 
