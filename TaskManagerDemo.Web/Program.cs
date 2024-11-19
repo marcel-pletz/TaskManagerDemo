@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews(options => options.AllowEmptyInputInBodyModelBinding = true);
+builder.Services
+    .AddControllersWithViews(options => options.AllowEmptyInputInBodyModelBinding = true)
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
@@ -28,7 +32,10 @@ builder.Services.AddDbContext<TaskManagerDbContext>(options =>
 });
     
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SupportNonNullableReferenceTypes();
+});
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateTodo).Assembly));
 
 ConfigureDependencies(builder.Services);

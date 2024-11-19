@@ -26,7 +26,6 @@ public sealed class UserController(IUnitOfWork unitOfWork) : ControllerBase
         
         public string Email { get; private init; }
         
-        [JsonConverter(typeof(JsonStringEnumConverter))]
         public Role Role { get; private init; }
 
         internal static UserDto From(User user)
