@@ -17,9 +17,9 @@ async function logoutUser() {
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <span class="ms-auto navbar-text d-inline-flex">
-        <template v-if="isLoading" class="navbar-text">Lade User</template>
+        <span v-if="isLoading" class="navbar-text">Lade User</span>
       
-        <template v-else-if="isAuthenticated">
+        <template v-else-if="isAuthenticated && currentUser">
           <span >
             Eingeloggt als: {{currentUser.userName}}
           </span>
@@ -30,7 +30,7 @@ async function logoutUser() {
           </button>
         </template>
 
-        <template v-else  class="navbar-text">Nicht eingeloggt</template>
+        <span v-else  class="navbar-text">Nicht eingeloggt</span>
       </span>
     </div>
   </nav>

@@ -1,10 +1,10 @@
-import {createRouter, createWebHistory, RouteRecord} from "vue-router";
+import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import TodoList from "./components/TodoList.vue";
 import Login from "./components/Login.vue";
 
 import { useUserStore } from "./stores/userStore.ts";
 
-const routes: RouteRecord = [
+const routes: RouteRecordRaw[] = [
     {
         path: '/',
         name: 'Todos',
@@ -22,7 +22,7 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
     const userStore = useUserStore();
     await userStore.fetchCurrentUser();
     

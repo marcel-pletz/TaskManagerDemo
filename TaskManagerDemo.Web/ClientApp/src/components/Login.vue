@@ -22,18 +22,17 @@ async function loginUser(user: UserDto) {
 
     await router.push({name: 'Todos'});  
   }
-} 
-
+}
 </script>
 
 <template>
   <h2>Einloggen als:</h2>
-    <div class="list-group">
-        <button v-for="user in availableUsers" 
-                @click="loginUser(user)"  
-                class="list-group-item list-group-item-action">
-          {{user.userName}}
-        </button>
+  <div class="list-group">
+      <button v-for="user in availableUsers" 
+              @click="loginUser(user)"  
+              class="list-group-item list-group-item-action">
+        {{user.userName}}
+      </button>
   </div>
 </template>
 

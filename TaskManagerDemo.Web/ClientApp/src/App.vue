@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import {useUserStore} from "./stores/userStore.ts";
+import { onMounted } from "vue";
+import { useUserStore } from "./stores/userStore.ts";
 import Navbar from "./components/Navbar.vue";
 const { fetchCurrentUser } = useUserStore();
 
