@@ -2,7 +2,7 @@ import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 import TodoList from "./components/TodoList.vue";
 import Login from "./components/Login.vue";
 
-import { useUserStore } from "./stores/userStore.ts";
+import {useUserStore} from "./stores/userStore.ts";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -25,10 +25,10 @@ const router = createRouter({
 router.beforeEach(async (to) => {
     const userStore = useUserStore();
     await userStore.fetchCurrentUser();
-    
-    if(!userStore.isAuthenticated && to.name !== 'Login') {
-        return { name: 'Login' };
+
+    if (!userStore.isAuthenticated && to.name !== 'Login') {
+        return {name: 'Login'};
     }
 })
 
-export { router, routes }
+export {router, routes}
