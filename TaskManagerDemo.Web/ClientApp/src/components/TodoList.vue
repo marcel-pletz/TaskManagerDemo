@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import apiClient from "../api.client.ts";
-import { Status, TodoEntryDto, TodoListDto } from "../api.ts";
-import { computed, onMounted, ref } from "vue";
+
+import {computed, onMounted, ref} from "vue";
 import TodoListEntry from "./TodoListEntry.vue";
+import {Status, TodoEntryDto, TodoListDto} from "../api/data-contracts.ts";
+import {todoClient} from "../api/api.client.ts";
 
 const isLoading = ref(true);
 
-const todos = ref<TodoListDto>(); 
+const todos = ref<TodoListDto>();
 onMounted(async function loadTodos() {
-  const response = await apiClient.todosList();
+  const response = await todoClient.listAllTodosOfUser();
   todos.value = response.data;
   isLoading.value = false;
 });
@@ -21,9 +22,9 @@ const groupedTodos = computed(() => {
 });
 
 const statusColumns: StatusColumns = {
-  Todo: { title: "Zu Erledigen" },
-  InProgress: { title: "In Arbeit" },
-  Finished: { title: "Erledigt" },
+  Todo: {title: "Zu Erledigen"},
+  InProgress: {title: "In Arbeit"},
+  Finished: {title: "Erledigt"},
 }
 
 type StatusColumns = {
@@ -45,18 +46,18 @@ function updateStatus(entry: TodoEntryDto, newStatus: Status) {
     <div class="row">
       <div v-for="group in groupedTodos.keys()"
            class="col">
-        {{statusColumns[group].title}}
+        {{ statusColumns[group].title }}
       </div>
     </div>
     <div class="row">
-      <div v-for="statusGroup in groupedTodos.keys()" class="col" >
+      <div v-for="statusGroup in groupedTodos.keys()" class="col">
         <TodoListEntry v-for="todo in groupedTodos.get(statusGroup)"
                        :todo="todo"
-                       @status-update="(newStatus) => updateStatus(todo, newStatus)" />
+                       @status-update="(newStatus) => updateStatus(todo, newStatus)"/>
       </div>
     </div>
   </template>
-  
+
 </template>
 
 <style scoped>

@@ -35,6 +35,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SupportNonNullableReferenceTypes();
+    options.CustomOperationIds(x => $"{x.ActionDescriptor.RouteValues["action"]}");
+    options.DocInclusionPredicate((name, api) => true);
 });
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateTodo).Assembly));
 
