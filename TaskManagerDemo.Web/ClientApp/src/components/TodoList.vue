@@ -41,17 +41,22 @@ function updateStatus(entry: TodoEntryDto, newStatus: Status) {
 
 <template>
   <h2>Todos:</h2>
+  <router-link :to="{ name: 'TodoCreate'}" class="btn btn-primary mb-2">Neues Todo</router-link>
+  
   <span v-if="isLoading">Lade Todos...</span>
   <template v-else>
     <div class="row">
       <div v-for="group in groupedTodos.keys()"
+           :key="group"
            class="col">
         {{ statusColumns[group].title }}
       </div>
     </div>
     <div class="row">
-      <div v-for="statusGroup in groupedTodos.keys()" class="col">
-        <TodoListEntry v-for="todo in groupedTodos.get(statusGroup)"
+      <div v-for="group in groupedTodos.keys()"
+           :key="group"
+           class="col">
+        <TodoListEntry v-for="todo in groupedTodos.get(group)"
                        :todo="todo"
                        @status-update="(newStatus) => updateStatus(todo, newStatus)"/>
       </div>

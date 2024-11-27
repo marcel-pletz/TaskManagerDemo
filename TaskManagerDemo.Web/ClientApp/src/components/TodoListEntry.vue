@@ -24,8 +24,17 @@ async function finish() {
 
 <template>
   <div class="card m-1">
-    <div class="card-body">
+    <div class="card-body d-flex flex-column">
       <div class="card-text">{{ todo.title }}</div>
+      <div class="card-text ms-auto fst-italic" v-if=todo.dueDate>Zu Erledigen bis: {{ todo.dueDate }}</div>
+    </div>
+    <div v-if="todo.status != Status.Finished"
+         class="card-footer d-flex justify-content-end">
+      <router-link :to="{name: 'TodoEdit', params: {id: todo.id} }"
+                   class="btn btn-secondary">
+        Bearbeiten
+      </router-link>
+
       <button v-if="todo.status === Status.Todo"
               class="btn btn-primary"
               @click="startProgress">
@@ -41,5 +50,7 @@ async function finish() {
 </template>
 
 <style scoped>
-
+.btn {
+  margin-right: 0.25rem;
+}
 </style>
