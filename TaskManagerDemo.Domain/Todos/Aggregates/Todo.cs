@@ -32,8 +32,26 @@ public sealed class Todo : AggregateRoot
         OwnerId = ownerId;
     }
 
+    public void Update(Title title, Description description)
+    {
+        if (Title == title && Description == description)
+        {
+            return;
+        }
+        
+        Title = title;
+        Description = description;
+        
+        Raise(new TodoUpdated(Id));
+    }
+    
     public void ChangeDueDate(DateOnly dueDate, DateOnly today)
     {
+        if (dueDate == DueDate)
+        {
+            return;
+        }
+        
         ValidateStatusAllowsDueDateChanges();
 
         ValidateDueDate(dueDate, today);
@@ -53,6 +71,11 @@ public sealed class Todo : AggregateRoot
 
     public void RemoveDueDate()
     {
+        if (DueDate == null)
+        {
+            return;
+        }
+        
         ValidateStatusAllowsDueDateChanges();
         
         DueDate = null;
@@ -84,14 +107,6 @@ public sealed class Todo : AggregateRoot
         FinishedDateTime = now;
         
         Raise(new TodoFinished(Id, FinishedDateTime.Value));
-    }
-
-    public void Update(Title title, Description description)
-    {
-        Title = title;
-        Description = description;
-        
-        Raise(new TodoUpdated(Id));
     }
     
     public bool IsOwnedBy(User user)
