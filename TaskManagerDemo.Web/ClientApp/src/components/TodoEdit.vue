@@ -8,7 +8,7 @@ import {onMounted, ref} from "vue";
 
 const props = defineProps<{
   id: string;
-}>() ;
+}>();
 
 const router = useRouter();
 
@@ -26,7 +26,7 @@ async function updateTodo(todo: TodoCommandDto): Promise<void> {
 </script>
 
 <template>
-  <TodoForm v-if="todo" :todo="todo" :submit-fn="updateTodo" />
+  <TodoForm v-if="todo" :todo="todo" :submit-fn="updateTodo"/>
 </template>
 
 <style scoped>

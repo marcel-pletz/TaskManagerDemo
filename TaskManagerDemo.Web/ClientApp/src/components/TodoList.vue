@@ -42,7 +42,7 @@ function updateStatus(entry: TodoEntryDto, newStatus: Status) {
 <template>
   <h2>Todos:</h2>
   <router-link :to="{ name: 'TodoCreate'}" class="btn btn-primary mb-2">Neues Todo</router-link>
-  
+
   <span v-if="isLoading">Lade Todos...</span>
   <template v-else>
     <div class="row">

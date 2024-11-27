@@ -30,6 +30,7 @@ async function loginUser(user: UserDto) {
   <h2>Einloggen als:</h2>
   <div class="list-group">
     <button v-for="user in availableUsers"
+            :key="user.id"
             @click="loginUser(user)"
             class="list-group-item list-group-item-action">
       {{ user.userName }}

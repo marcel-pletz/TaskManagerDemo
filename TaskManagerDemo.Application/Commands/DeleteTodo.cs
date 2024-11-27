@@ -1,5 +1,4 @@
-﻿using MediatR;
-using TaskManagerDemo.Application.Providers;
+﻿using TaskManagerDemo.Application.Providers;
 using TaskManagerDemo.Domain;
 using TaskManagerDemo.Domain.Todos.Aggregates;
 using TaskManagerDemo.Domain.Todos.Services;
@@ -10,8 +9,7 @@ public sealed record DeleteTodo(string Id) : ModifyTodoRequest(Id)
 {
     public sealed class Handler(IUnitOfWork unitOfWork, 
         IUserProvider userProvider,
-        TodoPermissionGuard guard,
-        IMediator mediator) 
+        TodoPermissionGuard guard) 
         : HandlerTemplate<DeleteTodo>(unitOfWork, userProvider, guard)
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;

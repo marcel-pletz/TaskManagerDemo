@@ -39,15 +39,15 @@ const [dueDate, dueDateAttrs] = defineField("dueDate");
            v-model="title"
            v-bind="titleAttrs"
            class="form-control"
-           :class="{'is-invalid': !!errors.title}" />
-    <ErrorMessage name="title" class="invalid-feedback" />
+           :class="{'is-invalid': !!errors.title}"/>
+    <ErrorMessage name="title" class="invalid-feedback"/>
 
     <textarea name="description"
               v-model="description"
               v-bind="descriptionAttrs"
               title="description"
               class="form-control"
-              :class="{'is-invalid': !!errors.description}" />
+              :class="{'is-invalid': !!errors.description}"/>
     <ErrorMessage name="description" class="invalid-feedback"/>
 
     <input type="date"
@@ -57,7 +57,7 @@ const [dueDate, dueDateAttrs] = defineField("dueDate");
            title="dueDate"
            class="form-control"
            :class="{'is-invalid': !!errors.dueDate}"
-           :disabled="todo?.status != undefined && todo.status != Status.Todo" />
+           :disabled="todo?.status != undefined && todo.status != Status.Todo"/>
     <ErrorMessage name="dueDate" class="invalid-feedback"/>
 
     <button class="btn btn-primary" type="submit">Speichern</button>

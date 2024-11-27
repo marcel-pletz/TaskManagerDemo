@@ -19,16 +19,15 @@ public sealed record UpdateTodo(string Id, string Title, string Description) : M
         protected override void DoModification(Todo todo, UpdateTodo request)
         {
             Update(todo, request);
+            UpdateDueDate(todo, request.DueDate);
         }
 
         private void Update(Todo todo, UpdateTodo request)
         {
             var title = new Title(request.Title);
             var description = new Description(request.Description);
-            
+
             todo.Update(title, description);
-            
-            UpdateDueDate(todo, request.DueDate);
         }
 
         private void UpdateDueDate(Todo todo, DateOnly? dueDate)
