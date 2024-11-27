@@ -11,6 +11,7 @@ using TaskManagerDemo.Domain.Users.Repositories;
 using TaskManagerDemo.Infrastructure;
 using TaskManagerDemo.Infrastructure.Database;
 using TaskManagerDemo.Infrastructure.Database.Configurations;
+using TaskManagerDemo.Infrastructure.JsonConverters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddControllersWithViews(options => options.AllowEmptyInputInBodyModelBinding = true)
     .AddJsonOptions(options =>
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    {
+        var converters = options.JsonSerializerOptions.Converters;
+        converters.Add(new JsonStringEnumConverter());
+        converters.Add(new DateOnlyJsonConverter());
+    });
+
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
